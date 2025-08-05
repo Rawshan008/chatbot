@@ -1,6 +1,7 @@
 import streamlit as st
 from langraph_backend import chatbot
 from langchain_core.messages import HumanMessage
+import time
 
 st.set_page_config(
     page_title="Welcome to My Chatbot",
@@ -47,13 +48,13 @@ if user_input:
     st.text(user_input)
 
   with st.chat_message('assistant'):
-    ai_response = st.write_stream(
-      message_chunk.content for message_chunk, metadata in chatbot.stream(
-        {'messages': [HumanMessage(content=user_input)]},
-        config=CONFIG,
-        stream_mode='messages'
-      )
-    )
-  
+    with st.spinner("Wait for it...", show_time=False):
+      ai_response = st.write_stream(
+        message_chunk.content for message_chunk, metadata in chatbot.stream(
+          {'messages': [HumanMessage(content=user_input)]},
+          config=CONFIG,
+          stream_mode='messages'
+        )
+      )  
 
   st.session_state['messages_history'].append({'role': 'assistant', 'content' : ai_response})
