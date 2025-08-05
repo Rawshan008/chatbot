@@ -2,6 +2,10 @@ import streamlit as st
 from langraph_backend import chatbot
 from langchain_core.messages import HumanMessage
 
+st.set_page_config(
+    page_title="Welcome to My Chatbot",
+)
+
 st.title("Welcome to My Chatbot")
 
 
